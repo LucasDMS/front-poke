@@ -13,6 +13,7 @@ p{
 .pokemon h1 {
     font-size: 32px;
 }
+
 .pokemon p {
     color: #666;
     line-height: 24px;
@@ -57,7 +58,7 @@ p{
 }
 
 .pokemon-type .flying{
-    background: linear-gradient(180deg, #3dc7ef 50%, #bdb9b8 50%);
+    background-color: #3dc7ef;
 
 }
 
@@ -172,4 +173,8 @@ p{
 .pokemon-type-evolution{
     margin-top: 40%;
 
+}
+
+.pokemon-main-image{
+    border-radius: 5px;
 }

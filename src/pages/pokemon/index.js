@@ -16,24 +16,42 @@ export default class Pokemon extends Component {
         this.setState({ pokemon: response.data });
     }
 
+    getRGBFromClassCSS(str){
+        var elemPokemonType = document.createElement("div");
+        var elem = document.createElement("div");
+
+        elem.style.display="none";
+        elem.className= str;
+        elemPokemonType.className = "pokemon-type"
+
+        elemPokemonType.appendChild(elem)
+        document.body.appendChild(elemPokemonType);
+
+        return  window.getComputedStyle(elem,null).getPropertyValue("background-color");
+    }
+
+
     render() {
         const { pokemon } = this.state;
-  
+
         let listOfTypes = [] 
         let listOfEvolutions = [] 
-        let listOfEvolutionsTypes = [] 
+        let listOfColorTypes = []
 
-        if(typeof pokemon.types !== 'undefined')
-            listOfTypes= pokemon.types.map((item) => 
+        if(typeof pokemon.types !== 'undefined'){
+            listOfTypes = pokemon.types.map((item) => 
                 <label className={ item.type.name }>{item.type.name}</label>
             )
+            pokemon.types.forEach((type) => listOfColorTypes.push(this.getRGBFromClassCSS(type.type.name)))
+        }
 
-
+       
+        
         if(typeof pokemon.evolutionChain !== 'undefined')
             listOfEvolutions = pokemon.evolutionChain.map((item) => 
                 <div className="pokemon-evolution-display">
                     <div className="pokemon-evolution-item">
-                        <img src={item.imgPath}/>
+                        <img  src={item.imgPath}/>
                         <p>{item.name + " #" + item.id}</p>
                         <div className="pokemon-type pokemon-type-evolution">
                             { item.types.map((type) => <label className={ type.type.name }>{type.type.name}</label> ) }
@@ -42,7 +60,7 @@ export default class Pokemon extends Component {
                 </div>
             )
 
-            //listOfEvolutionsTypes = item.types.map((teste) => teste.map((type) => <label className={ type.name }>{type.name}</label>))
+           
         return (
 
             <section className="pokemon">
@@ -51,7 +69,7 @@ export default class Pokemon extends Component {
                 </div>
                 <div className="pokemon-content">
                     
-                    <img src={pokemon.imgPath}/>
+                    <img className="pokemon-main-image" style={{background: `linear-gradient(to bottom,${listOfColorTypes[0]}, ${listOfColorTypes[1]})`}} src={pokemon.imgPath}/>
                     <div className="pokemon-info">
                         
                         <p>Type</p>
